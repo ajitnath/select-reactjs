@@ -1,0 +1,37 @@
+h1, p {
+  margin:2rem;
+}
+
+input {
+    width: 100%;
+    max-width: 40rem;
+    padding: 1rem;
+}
+
+.react-select {
+  position:relative;
+  max-width: 40rem;
+}
+
+ul {
+  list-style: none;
+  border: 1px solid #cdcdcd;
+  padding: 0px;
+  width:100%;
+}
+
+ul :first-child {
+  border:none;
+}
+
+li {
+  padding:1rem;
+  border-top: 1px solid #cdcdcd;
+  text-align: left;
+  curson:pointer;
+}
+
+li:hover {
+  background-color:#545454;
+  color:#fff;
+}
