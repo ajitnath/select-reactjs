@@ -7,18 +7,21 @@ class Options extends React.Component {
     super(props); 
   }
 
-    render() {
-      let inputArray = this.props.options_array
-      console.log("input array", inputArray);
+  render() {
+      let visible = this.props.options_showing
       return (
-        <ul className="hide-show">
-        {
-          inputArray.map((element, index) => { return (<li key={index}>{element}</li>)})                  
-        }
-          
-        </ul>
+        (visible===true) ? this.renderList() : null
       );
-    }
+  }
+
+  renderList() {
+    let inputArray = this.props.options_array
+    return (
+      <ul className="hide-show">
+          { inputArray.map((element, index) =>  (<li key={index}>{element}</li>))}
+      </ul>
+    ) 
+  }
 }
 
 export default Options

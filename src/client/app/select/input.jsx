@@ -20,7 +20,7 @@ class Input extends React.Component {
 
   render () {
     return (
-        <input type="text" className="form-group" placeholder={this.props.placeholder} value={this.props.text_value} onChange={(e) => (this.handleChange(e))}/>
+        <input type="text" className="form-group" placeholder={this.props.placeholder} value={this.props.value} onChange={(e) => (this.handleChange(e))}/>
       );
   }
 }

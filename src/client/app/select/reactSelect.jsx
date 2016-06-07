@@ -1,5 +1,5 @@
 import React from 'react'
-import Input from './input.jsx'
+import Text from './input.jsx'
 import Options from './options.jsx'
 import _ from 'lodash'
 
@@ -34,18 +34,21 @@ class ReactSelect extends React.Component {
     this.setState({
       text_value:text
     });
+    if (this.state.text_value === "") {
+      this.setState({options_showing:false})
+    }
+    else {
+      this.setState({options_showing:true}) 
+    }
     console.log("state", this.state.text_value)
   }
 
   render() {
     return(
       <div className="form-group react-select">
-        <Input placeholder="Please Select A Country" text_value={this.state.text_value} cb={this.setInput}/>
-        { this.props.options_showing &&
+        <Text placeholder="Please Select A Country" value={this.state.text_value} cb={this.setInput}/>
         <Options options_showing={this.state.options_showing} options_array={this.state.options_array} cb={this.setInput} />
-        }
       </div>
-
     );
   }
 }

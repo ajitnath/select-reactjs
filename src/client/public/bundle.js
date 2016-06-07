@@ -21008,6 +21008,11 @@
 	      this.setState({
 	        text_value: text
 	      });
+	      if (this.state.text_value === "") {
+	        this.setState({ options_showing: false });
+	      } else {
+	        this.setState({ options_showing: true });
+	      }
 	      console.log("state", this.state.text_value);
 	    }
 	  }, {
@@ -21016,8 +21021,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'form-group react-select' },
-	        _react2.default.createElement(_input2.default, { placeholder: 'Please Select A Country', text_value: this.state.text_value, cb: this.setInput }),
-	        this.props.options_showing && _react2.default.createElement(_options2.default, { options_showing: this.state.options_showing, options_array: this.state.options_array, cb: this.setInput })
+	        _react2.default.createElement(_input2.default, { placeholder: 'Please Select A Country', value: this.state.text_value, cb: this.setInput }),
+	        _react2.default.createElement(_options2.default, { options_showing: this.state.options_showing, options_array: this.state.options_array, cb: this.setInput })
 	      );
 	    }
 	  }]);
@@ -21085,7 +21090,7 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      return _react2.default.createElement('input', { type: 'text', className: 'form-group', placeholder: this.props.placeholder, value: this.props.text_value, onChange: function onChange(e) {
+	      return _react2.default.createElement('input', { type: 'text', className: 'form-group', placeholder: this.props.placeholder, value: this.props.value, onChange: function onChange(e) {
 	          return _this2.handleChange(e);
 	        } });
 	    }
@@ -21135,8 +21140,13 @@
 	  _createClass(Options, [{
 	    key: "render",
 	    value: function render() {
+	      var visible = this.props.options_showing;
+	      return visible === true ? this.renderList() : null;
+	    }
+	  }, {
+	    key: "renderList",
+	    value: function renderList() {
 	      var inputArray = this.props.options_array;
-	      console.log("input array", inputArray);
 	      return _react2.default.createElement(
 	        "ul",
 	        { className: "hide-show" },
