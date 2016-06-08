@@ -5,6 +5,16 @@ class Options extends React.Component {
 
   constructor (props) {
     super(props); 
+    _.bindAll(this, 'handleSubmit', 'handleClick')
+  }
+
+  handleSubmit(option) {
+    this.props.onClick(option)
+  }
+
+  handleClick(element) {
+    this.handleSubmit(element)
+    console.log(element);
   }
 
   render() {
@@ -18,7 +28,7 @@ class Options extends React.Component {
     let inputArray = this.props.options_array
     return (
       <ul className="hide-show">
-          { inputArray.map((element, index) =>  (<li key={index}>{element}</li>))}
+          { inputArray.map((element, index) =>  (<li key={index} name={element} onClick={() => this.handleClick(element)}>{element}</li>))}
       </ul>
     ) 
   }

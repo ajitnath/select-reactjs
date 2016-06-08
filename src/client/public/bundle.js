@@ -20970,6 +20970,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	// I am using a global array of countries as an example here
+	var country_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+	
 	var ReactSelect = function (_React$Component) {
 	  _inherits(ReactSelect, _React$Component);
 	
@@ -20986,15 +20989,15 @@
 	
 	    };
 	
-	    _lodash2.default.bindAll(_this, 'setInput');
+	    _lodash2.default.bindAll(_this, 'setInput', 'setOption');
 	    return _this;
 	  }
 	
 	  _createClass(ReactSelect, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      // TODO get the json data from the array
-	      this.setState({ options_array: ['Option 1', 'Option 2', 'Option 3', 'Option 4'] });
+	      // SETS THE VALUE TO THE LENGTH OF THE ARRAY
+	      this.setState({ options_array: country_list });
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -21002,18 +21005,37 @@
 	      //
 	    }
 	  }, {
+	    key: 'filterOptions',
+	    value: function filterOptions(text) {
+	      // TODO escape the string to create a usable regular expression
+	
+	      // Construct the regular expression
+	      var regex = new RegExp('(?=.*' + text + ')', 'ig');
+	      console.log(regex);
+	      var filtered = country_list.filter(function (item) {
+	        return regex.test(item);
+	      });
+	      console.log(filtered);
+	
+	      this.setState({ options_array: filtered });
+	    }
+	  }, {
 	    key: 'setInput',
 	    value: function setInput(text) {
 	      // Set input
-	      this.setState({
-	        text_value: text
-	      });
-	      if (this.state.text_value === "") {
-	        this.setState({ options_showing: false });
+	
+	      if (text === "") {
+	        this.setState({ options_showing: false, text_value: "" });
 	      } else {
-	        this.setState({ options_showing: true });
+	        this.setState({ options_showing: true, text_value: text });
+	        this.filterOptions(text);
 	      }
-	      console.log("state", this.state.text_value);
+	    }
+	  }, {
+	    key: 'setOption',
+	    value: function setOption(option) {
+	      this.setState({ text_value: option, options_showing: false });
+	      console.log("Current option is", option);
 	    }
 	  }, {
 	    key: 'render',
@@ -21021,8 +21043,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'form-group react-select' },
-	        _react2.default.createElement(_input2.default, { placeholder: 'Please Select A Country', value: this.state.text_value, cb: this.setInput }),
-	        _react2.default.createElement(_options2.default, { options_showing: this.state.options_showing, options_array: this.state.options_array, cb: this.setInput })
+	        _react2.default.createElement(_input2.default, { placeholder: 'Please Select A Country', value: this.state.text_value, onChange: this.setInput }),
+	        _react2.default.createElement(_options2.default, { options_showing: this.state.options_showing, options_array: this.state.options_array, onClick: this.setOption })
 	      );
 	    }
 	  }]);
@@ -21051,6 +21073,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _lodash = __webpack_require__(/*! lodash */ 172);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21070,29 +21096,24 @@
 	    _this.state = {
 	      input: ''
 	    };
+	    _lodash2.default.bindAll(_this, 'handleSubmit', 'handleChange');
 	    return _this;
 	  }
 	
 	  _createClass(Input, [{
 	    key: 'handleSubmit',
 	    value: function handleSubmit(text) {
-	      this.props.cb(text);
+	      this.props.onChange(text);
 	    }
 	  }, {
 	    key: 'handleChange',
 	    value: function handleChange(e) {
-	      this.setState({ input: e.target.value });
 	      this.handleSubmit(e.target.value);
-	      console.log(this.state.input);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement('input', { type: 'text', className: 'form-group', placeholder: this.props.placeholder, value: this.props.value, onChange: function onChange(e) {
-	          return _this2.handleChange(e);
-	        } });
+	      return _react2.default.createElement('input', { type: 'text', className: 'form-group', placeholder: this.props.placeholder, value: this.props.value, onChange: this.handleChange });
 	    }
 	  }]);
 	
@@ -21108,7 +21129,7 @@
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -21134,26 +21155,44 @@
 	  function Options(props) {
 	    _classCallCheck(this, Options);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Options).call(this, props));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Options).call(this, props));
+	
+	    _.bindAll(_this, 'handleSubmit', 'handleClick');
+	    return _this;
 	  }
 	
 	  _createClass(Options, [{
-	    key: "render",
+	    key: 'handleSubmit',
+	    value: function handleSubmit(option) {
+	      this.props.onClick(option);
+	    }
+	  }, {
+	    key: 'handleClick',
+	    value: function handleClick(element) {
+	      this.handleSubmit(element);
+	      console.log(element);
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      var visible = this.props.options_showing;
 	      return visible === true ? this.renderList() : null;
 	    }
 	  }, {
-	    key: "renderList",
+	    key: 'renderList',
 	    value: function renderList() {
+	      var _this2 = this;
+	
 	      var inputArray = this.props.options_array;
 	      return _react2.default.createElement(
-	        "ul",
-	        { className: "hide-show" },
+	        'ul',
+	        { className: 'hide-show' },
 	        inputArray.map(function (element, index) {
 	          return _react2.default.createElement(
-	            "li",
-	            { key: index },
+	            'li',
+	            { key: index, name: element, onClick: function onClick() {
+	                return _this2.handleClick(element);
+	              } },
 	            element
 	          );
 	        })
