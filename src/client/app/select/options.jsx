@@ -5,16 +5,17 @@ class Options extends React.Component {
 
   constructor (props) {
     super(props); 
-    _.bindAll(this, 'handleSubmit', 'handleClick')
-  }
-
-  handleSubmit(option) {
-    this.props.onClick(option)
+    _.bindAll(this, 'handleClick', 'handleBlur')
   }
 
   handleClick(element) {
-    this.handleSubmit(element)
+    this.props.onClick(element)
     console.log(element);
+  }
+
+  handleBlur(){
+    this.props.handleBlur()
+    console.log("on blur")
   }
 
   render() {

@@ -65,10 +65,14 @@ class ReactSelect extends React.Component {
 
   }
 
+  handleBlur() {
+    this.setState({text_value:"", options_showing:false})
+  }
+
   render() {
     return(
       <div className="form-group react-select">
-        <Text placeholder="Please Select A Country" value={this.state.text_value} onChange={this.setInput}/>
+        <Text placeholder="Please Select A Country" value={this.state.text_value} onChange={this.setInput} handleBlur={this.handleBlur}/>
         <Options options_showing={this.state.options_showing} options_array={this.state.options_array} onClick={this.setOption} />
       </div>
     );

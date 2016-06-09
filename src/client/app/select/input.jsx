@@ -7,7 +7,7 @@ class Input extends React.Component {
     this.state  = {
       input:''
     }
-    _.bindAll(this,'handleSubmit', 'handleChange')
+    _.bindAll(this,'handleSubmit', 'handleChange', 'handleBlur')
   }
 
   handleSubmit(text) {
@@ -20,7 +20,7 @@ class Input extends React.Component {
 
   render () {
     return (
-        <input type="text" className="form-group" placeholder={this.props.placeholder} value={this.props.value} onChange={this.handleChange}/>
+        <input type="text" className="form-group" placeholder={this.props.placeholder} value={this.props.value} onChange={this.handleChange} />
       );
   }
 }

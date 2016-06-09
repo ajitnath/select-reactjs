@@ -18,6 +18,9 @@ ul {
   border: 1px solid #cdcdcd;
   padding: 0px;
   width:100%;
+  max-height: 20rem;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 ul :first-child {
@@ -26,7 +29,7 @@ ul :first-child {
 
 li {
   padding:1rem;
-  border-top: 1px solid #cdcdcd;
+  border-top: 1px solid #eaeaea;
   text-align: left;
   curson:pointer;
 }
